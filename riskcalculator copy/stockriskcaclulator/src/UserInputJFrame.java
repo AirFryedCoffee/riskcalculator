@@ -15,6 +15,7 @@ public class UserInputJFrame extends JFrame {
     private JComboBox riskPercentageAmount;
     private JLabel riskPercentageAmountLabel;
     private JButton calculateButton;
+    float num3;
 
     public UserInputJFrame()
     {
@@ -63,7 +64,21 @@ public class UserInputJFrame extends JFrame {
 
                     if (checkAccountBalance(Integer.parseInt(accountBalanceField.getText())))
                     {
-                        JOptionPane.showMessageDialog(null, "Thank you for your account balance!", "Validation Result", JOptionPane.INFORMATION_MESSAGE);
+                        if (checkStockPriceGreaterThanStopPrice(Float.parseFloat(stockTradingPrice.getText()), Float.parseFloat(stopOutPrice.getText())))
+                        {
+                            if (checkRiskPercentageWithAccBalance(Integer.parseInt(accountBalanceField.getText()), Float.parseFloat((String) riskPercentageAmount.getSelectedItem())))
+                            {
+                                JOptionPane.showMessageDialog(null, "Everything is still working as expected", "Validation Result", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "Please try again.", "Validation Result", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null, "Please enter a stock price that is higher than your stop out price.", "Validation Result", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                     else
                     {
@@ -100,6 +115,19 @@ public class UserInputJFrame extends JFrame {
     {
         return num > 0;
     }
+
+    private boolean checkStockPriceGreaterThanStopPrice(float num1, float num2)
+    {
+        return num1 > num2;
+    }
+    //Just testing this Function, change functionality later. 
+    private boolean checkRiskPercentageWithAccBalance(int num1, float num2)
+    {
+        num3 = num2 / 100;
+        return num1*num3 == 2000;
+    }
+
+
 
 
     public static void main(String[] args) {
