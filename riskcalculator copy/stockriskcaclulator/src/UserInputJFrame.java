@@ -1,51 +1,59 @@
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
 
 
 public class UserInputJFrame extends JFrame {
-
+    JPanel panel;
     private JTextField accountBalanceField;
+    private JLabel accountBalanceLabel;
     private JTextField stockTradingPrice;
+    private JLabel stockTradingPriceLabel;
     private JTextField stopOutPrice;
-    private JButton validateButton;
+    private JLabel stopOutPriceLabel;
+    private JComboBox riskPercentageAmount;
+    private JLabel riskPercentageAmountLabel;
     private JButton calculateButton;
 
     public UserInputJFrame()
     {
         setTitle("Risk Calculator");
-        setSize(300, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
 
-        accountBalanceField = new JTextField("Enter Account Balance", 15);
-        stockTradingPrice = new JTextField("Enter Share Price", 15);
-        stopOutPrice = new JTextField("Enter Stop Loss Price", 15);
-        validateButton = new JButton("Validate");
+        panel = new JPanel();
+        panel.setLayout(null);
+
+
+        accountBalanceField = new JTextField( 15);
+        accountBalanceField.setBounds(345, 30, 125, 20);
+
+        accountBalanceLabel = new JLabel("Please enter your account balance");
+        accountBalanceLabel.setBounds(65, 30, 200, 20);
+
+        stockTradingPrice = new JTextField( 15);
+        stockTradingPrice.setBounds(395, 70, 75, 20);
+
+        stockTradingPriceLabel = new JLabel("Please enter the current trading price");
+        stockTradingPriceLabel.setBounds(65, 70, 250, 20);
+
+        stopOutPrice = new JTextField(15);
+        stopOutPrice.setBounds(395, 110, 75, 20);
+
+        stopOutPriceLabel = new JLabel("Please enter your stop price");
+        stopOutPriceLabel.setBounds(65, 110, 200, 20);
+
+        String[] riskOptions = {"0.5", "1.0", "1.5", "2.0", "2.5", "3.0", "3.5"};
+        riskPercentageAmount = new JComboBox(riskOptions);
+        riskPercentageAmount.setBounds(420, 150, 50, 35);
+
+        riskPercentageAmountLabel = new JLabel("Please select what % of your account you would like to risk");
+        riskPercentageAmountLabel.setBounds(20, 160, 340, 20);
+
         calculateButton = new JButton("Calculate");
+        calculateButton.setBounds(180,300,150, 50);
 
 
-        validateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (lengthCheckValidate(stockTradingPrice.getText()))
-                {
-                    JOptionPane.showMessageDialog(null, "Valid input!",
-                            "Validation Result", JOptionPane.INFORMATION_MESSAGE);
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null,
-                            "Invalid input! Input must have at least 6 characters.",
-                            "Validation Result", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
 
         calculateButton.addActionListener(new ActionListener() {
             @Override
@@ -67,25 +75,27 @@ public class UserInputJFrame extends JFrame {
                 }
             }
         });
+        setSize(500, 450);
+        add(panel);
+
+        panel.add(accountBalanceField);
+        panel.add(accountBalanceLabel);
+        panel.add(stockTradingPrice);
+        panel.add(stockTradingPriceLabel);
+        panel.add(stopOutPrice);
+        panel.add(stopOutPriceLabel);
+        panel.add(riskPercentageAmount);
+        panel.add(riskPercentageAmountLabel);
+        panel.add(calculateButton);
 
 
-        add(accountBalanceField);
-        add(validateButton);
-        add(stockTradingPrice);
-        add(stopOutPrice);
-        add(calculateButton);
-        setSize(400, 300);
 
-        setLocationRelativeTo(null);
+
         setVisible(true);
         
 
     }
 
-    private boolean lengthCheckValidate(String input)
-    {
-        return input.length() >= 6;
-    }
     private boolean checkAccountBalance(int num)
     {
         return num > 0;
@@ -104,3 +114,6 @@ public class UserInputJFrame extends JFrame {
     }
 
 }
+
+
+
