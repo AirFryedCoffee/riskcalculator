@@ -66,13 +66,15 @@ public class UserInputJFrame extends JFrame {
                     {
                         if (checkStockPriceGreaterThanStopPrice(Float.parseFloat(stockTradingPrice.getText()), Float.parseFloat(stopOutPrice.getText())))
                         {
-                            if (checkRiskPercentageWithAccBalance(Integer.parseInt(accountBalanceField.getText()), Float.parseFloat((String) riskPercentageAmount.getSelectedItem())))
+                            if (checkRiskPercentageWithAccBalance(Integer.parseInt(accountBalanceField.getText()), Float.parseFloat(stockTradingPrice.getText()), Float.parseFloat(stopOutPrice.getText())))
                             {
                                 JOptionPane.showMessageDialog(null, "Everything is still working as expected", "Validation Result", JOptionPane.INFORMATION_MESSAGE);
+                                float totalRiskAmount = calculateRisk(Integer.parseInt(accountBalanceField.getText()), Float.parseFloat((String) riskPercentageAmount.getSelectedItem()));
+                                JOptionPane.showMessageDialog(null, "Your risk is " + totalRiskAmount, "Validation Result", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else
                             {
-                                JOptionPane.showMessageDialog(null, "Please try again.", "Validation Result", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Please make sure that the account balance is at least 10x greater than the trading price of the stock.", "Validation Result", JOptionPane.ERROR_MESSAGE);
                             }
                         }
                         else
@@ -82,7 +84,7 @@ public class UserInputJFrame extends JFrame {
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(null, "Invalid, please enter a number that is greater than 0.", "Validation Result", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Invalid, please enter a number that is greater than 1,000.", "Validation Result", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 catch (NumberFormatException ex) {
@@ -113,18 +115,23 @@ public class UserInputJFrame extends JFrame {
 
     private boolean checkAccountBalance(int num)
     {
-        return num > 0;
+        return num > 1000;
     }
 
     private boolean checkStockPriceGreaterThanStopPrice(float num1, float num2)
     {
         return num1 > num2;
     }
-    //Just testing this Function, change functionality later. 
-    private boolean checkRiskPercentageWithAccBalance(int num1, float num2)
+    //Just testing this Function, change functionality later.
+    private boolean checkRiskPercentageWithAccBalance(int num1, float num2, float num3)
     {
-        num3 = num2 / 100;
-        return num1*num3 == 2000;
+        return num1 > num2 * 10 && num2 > num3;
+    }
+
+    private float calculateRisk(int accBal, float riskAmount)
+    {
+        float result = (riskAmount / 100) * accBal;
+        return result;
     }
 
 
