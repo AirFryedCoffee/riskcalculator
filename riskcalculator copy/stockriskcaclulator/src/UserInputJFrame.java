@@ -15,7 +15,6 @@ public class UserInputJFrame extends JFrame {
     private JComboBox riskPercentageAmount;
     private JLabel riskPercentageAmountLabel; 
     private JButton calculateButton;
-    float num3;
 
     public UserInputJFrame()
     {
@@ -128,7 +127,7 @@ public class UserInputJFrame extends JFrame {
     {
         return num1 > num2 * 10 && num2 > num3;
     }
-    
+
     private float calculateSomething(int num1, double num2, double num3, double num4) {
         double riskPercentage = num4 / 100;
         double riskDollarAmount = num1 * riskPercentage;
