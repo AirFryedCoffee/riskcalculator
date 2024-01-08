@@ -128,12 +128,7 @@ public class UserInputJFrame extends JFrame {
     {
         return num1 > num2 * 10 && num2 > num3;
     }
-
-    private float calculateRisk(int accBal, float riskAmount)
-    {
-        float result = (riskAmount / 100) * accBal;
-        return result;
-    }
+    
     private float calculateSomething(int num1, double num2, double num3, double num4) {
         double riskPercentage = num4 / 100;
         double riskDollarAmount = num1 * riskPercentage;
